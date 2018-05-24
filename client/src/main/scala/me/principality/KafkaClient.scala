@@ -31,7 +31,7 @@ object KafkaClient {
         |                factory: "org.apache.calcite.adapter.elasticsearch5.Elasticsearch5SchemaFactory",
         |                operand: {
         |                     coordinates: "{'127.0.0.1': 9300}",
-        |                     userConfig: "{}",
+        |                     userConfig: "{'cluster.name': 'elasticsearch_jianfeng'}",
         |                     index: "customer"
         |                }
         |         }
@@ -41,10 +41,8 @@ object KafkaClient {
     info.put("model", model)
 
     val connection = DriverManager.getConnection("jdbc:avatica:remote:url=http://localhost:28000", info)
-    val calciteConnection = connection.unwrap(classOf[CalciteConnection])
-    val rootSchema = calciteConnection.getRootSchema
     val statement = connection.createStatement
-    val resultSet = statement.executeQuery("select * from external")
+    val resultSet = statement.executeQuery("select * from \"elasticsearch\".\"external\"")
     PrintResultSet(resultSet)
     resultSet.close()
     return
@@ -78,8 +76,7 @@ object KafkaClient {
       while ( {
         i <= n
       }) {
-        buf.append(
-          if (i > 1) "; " else "")
+        buf.append(if (i > 1) "; " else "")
           .append(resultSet.getMetaData.getColumnLabel(i))
           .append("=").append(resultSet.getObject(i)) {
           i += 1

@@ -30,7 +30,9 @@ lazy val client = (project in file("client"))
     libraryDependencies ++= Seq(
       "org.slf4j" % "slf4j-simple" % "1.7.25",
       "net.cakesolutions" %% "scala-kafka-client" % "1.1.0",
-      "org.apache.calcite" % "calcite-core" % "1.16.0"
+      "org.apache.calcite" % "calcite-core" % "1.16.0",
+      "org.specs2" %% "specs2-core" % "4.0.2" % Test,
+      "org.elasticsearch.client" % "transport" % "5.5.2" % Test
     )
   )
 
