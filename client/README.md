@@ -1,6 +1,0 @@
-
-# KafkaClient
-
-## Design
-
-## Implementation
